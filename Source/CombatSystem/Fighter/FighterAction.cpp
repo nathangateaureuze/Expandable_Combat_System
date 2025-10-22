@@ -13,12 +13,12 @@ void UFighterAction::Trigger_Implementation(UFighter* from, UFighter* target)
 	return;
 }
 
-FText UFighterAction::GetName()
+FText UFighterAction::GetActionName()
 {
 	return name;
 }
 
-FText UFighterAction::GetDescription()
+FText UFighterAction::GetActionDescription()
 {
 	return description;
 }

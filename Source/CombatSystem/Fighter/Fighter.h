@@ -43,10 +43,10 @@ public:
 	FOnHealthChanged onHealthChanged;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
-	TSubclassOf<UFighterAction> actionClass;
+	TArray<TSubclassOf<UFighterAction>> actionClass;
 
 	UPROPERTY(BlueprintReadWrite)
-	UFighterAction* actions;
+	TArray<UFighterAction*> actions;
 	
 private:
 

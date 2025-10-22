@@ -25,15 +25,15 @@ public:
 	virtual void Trigger_Implementation(UFighter* from, UFighter* target);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
-	FText GetName();
+	FText GetActionName();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
-	FText GetDescription();
+	FText GetActionDescription();
 
 private:
 	UPROPERTY(EditAnywhere)
-	FText name;
+	FText name = FText::FromString(TEXT("NONE"));
 
 	UPROPERTY(EditAnywhere)
-	FText description;
+	FText description = FText::FromString(TEXT("NONE"));
 };

@@ -13,12 +13,15 @@ UFighter::UFighter()
 
 void UFighter::Initialize()
 {
-	if (!actionClass)
+	for (int i = 0; i < actionClass.Num(); i++)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("UFighter::Initialize - actionClass is invalid"));
-		actionClass = UFighterAction::StaticClass();
+		if (!actionClass[i])
+		{
+			UE_LOG(LogTemp, Warning, TEXT("UFighter::Initialize - actionClass is invalid"));
+			actionClass[i] = UFighterAction::StaticClass();
+		}
+		actions.Add(NewObject<UFighterAction>(this, actionClass[i]));
 	}
-	actions = NewObject<UFighterAction>(this, actionClass);
 }
 
 int UFighter::GetCurrentHealth()
