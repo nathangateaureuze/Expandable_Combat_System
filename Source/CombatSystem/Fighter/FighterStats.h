@@ -16,5 +16,8 @@ struct FFighterStats
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	int maxHealth = 10;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	int speed = 10;
 	
 };

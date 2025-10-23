@@ -12,6 +12,8 @@ class UEquipment;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnHealthChanged);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEquipped);
+
 /**
  * 
  */
@@ -44,6 +46,9 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnHealthChanged onHealthChanged;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnEquipped onEquipped;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
 	TArray<TSubclassOf<UFighterAction>> actionClass;
