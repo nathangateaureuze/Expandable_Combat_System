@@ -36,6 +36,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FFighterStats GetStats();
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FLinearColor GetIconColor();
+
 	UFUNCTION(BlueprintCallable)
 	int TakeDamage(int value);
 
@@ -58,4 +61,7 @@ private:
 
 	UPROPERTY()
 	UEquipment* equipment;
+
+	UPROPERTY(EditAnywhere)
+	FLinearColor iconColor = FLinearColor(1,0,1,1);
 };

@@ -43,6 +43,11 @@ FFighterStats UFighter::GetStats()
 	return stats;
 }
 
+FLinearColor UFighter::GetIconColor()
+{
+	return iconColor;
+}
+
 int UFighter::TakeDamage(int value)
 {
 	int result = FMath::Max(currentHealth - value, 0);
