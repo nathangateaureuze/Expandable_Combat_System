@@ -58,7 +58,7 @@ public:
 	
 private:
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	FFighterStats stats;
 
 	UPROPERTY()
