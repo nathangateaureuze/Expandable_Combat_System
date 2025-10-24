@@ -53,6 +53,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
 	TArray<TSubclassOf<UFighterAction>> actionClass;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
+	FLinearColor iconColor = FLinearColor(1, 0, 1, 1);
+
 	UPROPERTY(BlueprintReadWrite)
 	TArray<UFighterAction*> actions;
 	
@@ -66,7 +69,4 @@ private:
 
 	UPROPERTY()
 	UEquipment* equipment;
-
-	UPROPERTY(EditAnywhere)
-	FLinearColor iconColor = FLinearColor(1,0,1,1);
 };
