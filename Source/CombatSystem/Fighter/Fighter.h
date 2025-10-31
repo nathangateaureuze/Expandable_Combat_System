@@ -8,11 +8,9 @@
 #include "Fighter.generated.h"
 
 class UFighterAction;
-class UEquipment;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnHealthChanged);
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEquipped);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnActionTriggered);
 
 /**
  * 
@@ -25,6 +23,16 @@ class COMBATSYSTEM_API UFighter : public UObject
 public:
 
 	UFighter();
+
+	/*	-------------------
+	*	BP Initializer Values
+	*	-------------------	*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
+	TArray<TSubclassOf<UFighterAction>> initActionClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
+	FLinearColor initIconColor = FLinearColor(1, 0, 1, 1);
+	//END of BP Initializer Values
 
 	UFUNCTION(BlueprintCallable)
 	virtual void Initialize();
@@ -41,32 +49,40 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FLinearColor GetIconColor();
 
+	//TEMP - Set player color
+	UFUNCTION(BlueprintCallable)
+	void SetColor(FLinearColor color);
+
 	UFUNCTION(BlueprintCallable)
 	int TakeDamage(int value);
+	
+	void TriggerAction(UFighter* target);
+	
+	virtual void LaunchAction(UFighter* target);
 
 	UPROPERTY(BlueprintAssignable)
 	FOnHealthChanged onHealthChanged;
 
 	UPROPERTY(BlueprintAssignable)
-	FOnEquipped onEquipped;
+	FOnActionTriggered onActionTriggered;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
-	TArray<TSubclassOf<UFighterAction>> actionClass;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
-	FLinearColor iconColor = FLinearColor(1, 0, 1, 1);
-
-	UPROPERTY(BlueprintReadWrite)
-	TArray<UFighterAction*> actions;
 	
 private:
 
 	UPROPERTY(EditAnywhere)
 	FFighterStats stats;
 
+	UPROPERTY(EditAnywhere)
+	TArray<UFighterAction*> actions;
+
+	UFighterAction* selectedAction;
+
 	UPROPERTY()
 	int currentHealth;
 
-	UPROPERTY()
-	UEquipment* equipment;
+	UPROPERTY(EditAnywhere)
+	TArray<TSubclassOf<UFighterAction>> actionClass;
+
+	UPROPERTY(EditAnywhere)
+	FLinearColor iconColor = FLinearColor(1, 0, 1, 1);
 };

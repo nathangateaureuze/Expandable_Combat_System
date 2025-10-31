@@ -4,7 +4,6 @@
 
 #include "Fighter.h"
 #include "FighterAction.h"
-#include "Equipment.h"
 
 UFighter::UFighter()
 {
@@ -13,6 +12,9 @@ UFighter::UFighter()
 
 void UFighter::Initialize()
 {
+	iconColor = initIconColor;
+	actionClass = initActionClass;
+
 	for (int i = 0; i < actionClass.Num(); i++)
 	{
 		if (!actionClass[i])
@@ -50,7 +52,29 @@ FLinearColor UFighter::GetIconColor()
 
 int UFighter::TakeDamage(int value)
 {
+	value = value < 0 ? 0 : value;
 	int result = FMath::Max(currentHealth - value, 0);
 	SetCurrentHealth(result);
 	return 0;
+}
+
+void UFighter::TriggerAction(UFighter* target)
+{
+	if (selectedAction && target)
+	{
+		selectedAction->Trigger_Implementation(this, target);
+	}
+	onActionTriggered.Broadcast();
+	return;
+}
+
+void UFighter::LaunchAction(UFighter* target)
+{
+	TriggerAction(target);
+	return;
+}
+
+void UFighter::SetColor(FLinearColor color)
+{
+	iconColor = color;
 }
