@@ -42,6 +42,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void AddFighter(UFighter* fighter, int index);
 
+	UFUNCTION(BlueprintCallable)
 	void SetTargetedFighter(UFighter* target);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

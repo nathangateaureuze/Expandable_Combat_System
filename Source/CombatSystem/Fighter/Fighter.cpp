@@ -62,15 +62,23 @@ void UFighter::TriggerAction(UFighter* target)
 {
 	if (selectedAction && target)
 	{
-		selectedAction->Trigger_Implementation(this, target);
+		selectedAction->Trigger(this, target);
+
+		FString className = selectedAction->GetName();
+		UE_LOG(LogTemp, Warning, TEXT("UFighter::TriggerAction - triggered action! : %s"), *className);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("UFighter::TriggerAction - invalid refs!"));
 	}
 	onActionTriggered.Broadcast();
 	return;
 }
 
-void UFighter::LaunchAction(UFighter* target)
+void UFighter::LaunchAction_Implementation(UFighter* target)
 {
 	TriggerAction(target);
+	UE_LOG(LogTemp, Warning, TEXT("UFighter::LaunchAction_Implementation - done!"));
 	return;
 }
 

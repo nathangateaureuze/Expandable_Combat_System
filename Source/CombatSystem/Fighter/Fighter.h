@@ -57,8 +57,10 @@ public:
 	int TakeDamage(int value);
 	
 	void TriggerAction(UFighter* target);
-	
-	virtual void LaunchAction(UFighter* target);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void LaunchAction(UFighter* target);
+	virtual void LaunchAction_Implementation(UFighter* target);
 
 	UPROPERTY(BlueprintAssignable)
 	FOnHealthChanged onHealthChanged;
@@ -70,6 +72,11 @@ public:
 private:
 
 	UPROPERTY(EditAnywhere)
+	TArray<TSubclassOf<UFighterAction>> actionClass;
+
+protected:
+
+	UPROPERTY(EditAnywhere)
 	FFighterStats stats;
 
 	UPROPERTY(EditAnywhere)
@@ -79,9 +86,6 @@ private:
 
 	UPROPERTY()
 	int currentHealth;
-
-	UPROPERTY(EditAnywhere)
-	TArray<TSubclassOf<UFighterAction>> actionClass;
 
 	UPROPERTY(EditAnywhere)
 	FLinearColor iconColor = FLinearColor(1, 0, 1, 1);
