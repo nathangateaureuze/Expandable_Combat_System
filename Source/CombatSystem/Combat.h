@@ -11,6 +11,7 @@ class UFighterAction;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTargetChanged);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAddedFighter, UFighter*, fighter, int, index);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMainLoopExecuted);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnQueueRefilled);
 
 /**
@@ -38,6 +39,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void MainLoop();
+
+	UFUNCTION(BlueprintCallable)
+	void Start();
 	
 	UFUNCTION(BlueprintCallable)
 	void AddFighter(UFighter* fighter, int index);
@@ -55,6 +59,9 @@ public:
 	FOnAddedFighter onAddedFighter;
 
 	UPROPERTY(BlueprintAssignable)
+	FOnMainLoopExecuted onMainLoopExecuted;
+
+	UPROPERTY(BlueprintAssignable)
 	FOnQueueRefilled onQueueRefilled;
 
 
@@ -70,7 +77,7 @@ private:
 	void RefillQueue();
 
 	UFUNCTION()
-	void OnActionTriggered();
+	virtual void OnActionTriggered();
 
 	static TArray<UFighter*> SortFighters(TArray<UFighter*> fighters);
 };

@@ -30,8 +30,15 @@ void UCombat::MainLoop()
 
 	targetedFighter = fighters[(int)FMath::RandRange(0,fighters.Num()-1)];
 
+	fightersQueue.RemoveAt(0);
+
 	activeFighter->onActionTriggered.AddUniqueDynamic(this, &UCombat::OnActionTriggered);
 	activeFighter->LaunchAction(activeFighter);
+}
+
+void UCombat::Start()
+{
+	this->MainLoop();
 }
 
 void UCombat::AddFighter(UFighter* fighter, int index)
@@ -67,6 +74,7 @@ void UCombat::RefillQueue()
 
 void UCombat::OnActionTriggered()
 {
+	onMainLoopExecuted.Broadcast();
 }
 
 TArray<UFighter*> UCombat::SortFighters(TArray<UFighter*> fighters)
