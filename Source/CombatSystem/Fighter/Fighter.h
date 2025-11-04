@@ -7,6 +7,8 @@
 #include "FighterStats.h"
 #include "Fighter.generated.h"
 
+class UCombat;
+class UFighterController;
 class UFighterAction;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnHealthChanged);
@@ -59,14 +61,20 @@ public:
 	void TriggerAction(UFighter* target);
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void LaunchAction(UFighter* target);
-	virtual void LaunchAction_Implementation(UFighter* target);
+	void LaunchAction(UCombat* combat);
+	virtual void LaunchAction_Implementation(UCombat* combat);
 
 	UPROPERTY(BlueprintAssignable)
 	FOnHealthChanged onHealthChanged;
 
 	UPROPERTY(BlueprintAssignable)
 	FOnActionTriggered onActionTriggered;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	TMap<int, UFighterAction*> actions;
+
+	UPROPERTY()
+	UFighterController* controller;
 
 	
 private:
@@ -78,9 +86,6 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	FFighterStats stats;
-
-	UPROPERTY(EditAnywhere)
-	TArray<UFighterAction*> actions;
 
 	UFighterAction* selectedAction;
 

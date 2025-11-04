@@ -17,6 +17,7 @@ void UCombat::Initialize()
 
 	for (int i = 0; i < sortedFighters.Num(); i++)
 	{
+		sortedFighters[i]->Initialize();
 		AddFighter(sortedFighters[i], i);
 	}
 }
@@ -26,14 +27,12 @@ void UCombat::MainLoop()
 	if (fightersQueue.IsEmpty())
 	{ RefillQueue(); }
 
-	activeFighter = fightersQueue[0];
-
-	targetedFighter = fighters[(int)FMath::RandRange(0,fighters.Num()-1)];
+	SetActiveFighter(fightersQueue[0]);
 
 	fightersQueue.RemoveAt(0);
 
 	activeFighter->onActionTriggered.AddUniqueDynamic(this, &UCombat::OnActionTriggered);
-	activeFighter->LaunchAction(activeFighter);
+	activeFighter->LaunchAction(this);
 }
 
 void UCombat::Start()
@@ -48,22 +47,15 @@ void UCombat::AddFighter(UFighter* fighter, int index)
 	onAddedFighter.Broadcast(fighter, index);
 }
 
-void UCombat::SetTargetedFighter(UFighter* target)
+void UCombat::SetActiveFighter(UFighter* fighter)
 {
-	targetedFighter = target;
-
-	onTargetChanged.Broadcast();
+	activeFighter = fighter;
+	onActiveFighterChanged.Broadcast(fighter->controller);
 }
 
 TArray<UFighter*> UCombat::GetFighters()
 {
 	return fighters;
-}
-
-void UCombat::LaunchAction()
-{
-	activeFighter->LaunchAction(targetedFighter);
-	return;
 }
 
 void UCombat::RefillQueue()

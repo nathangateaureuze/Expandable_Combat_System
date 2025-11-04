@@ -7,11 +7,12 @@
 #include "Combat.generated.h"
 
 class UFighter;
+class UFighterController;
 class UFighterAction;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTargetChanged);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAddedFighter, UFighter*, fighter, int, index);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMainLoopExecuted);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnActiveFighterChanged, UFighterController*, fighterController);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnQueueRefilled);
 
 /**
@@ -46,20 +47,17 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void AddFighter(UFighter* fighter, int index);
 
-	UFUNCTION(BlueprintCallable)
-	void SetTargetedFighter(UFighter* target);
-
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	TArray<UFighter*> GetFighters();
-
-	UPROPERTY(BlueprintAssignable)
-	FOnTargetChanged onTargetChanged;
 
 	UPROPERTY(BlueprintAssignable)
 	FOnAddedFighter onAddedFighter;
 
 	UPROPERTY(BlueprintAssignable)
 	FOnMainLoopExecuted onMainLoopExecuted;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnActiveFighterChanged onActiveFighterChanged;
 
 	UPROPERTY(BlueprintAssignable)
 	FOnQueueRefilled onQueueRefilled;
@@ -70,9 +68,9 @@ private:
 	TArray<UFighter*> fightersQueue;
 
 	UFighter* activeFighter;
-	UFighter* targetedFighter;
 
-	void LaunchAction();
+	UFUNCTION()
+	void SetActiveFighter(UFighter* fighter);
 
 	void RefillQueue();
 

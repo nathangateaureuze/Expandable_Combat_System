@@ -3,6 +3,8 @@
 
 
 #include "Fighter.h"
+#include "../Combat.h"
+#include "FighterController.h"
 #include "FighterAction.h"
 
 UFighter::UFighter()
@@ -12,6 +14,9 @@ UFighter::UFighter()
 
 void UFighter::Initialize()
 {
+	controller = NewObject<UFighterController>();
+	controller->Initialize(this);
+
 	iconColor = initIconColor;
 	actionClass = initActionClass;
 
@@ -22,7 +27,7 @@ void UFighter::Initialize()
 			UE_LOG(LogTemp, Warning, TEXT("UFighter::Initialize - actionClass is invalid"));
 			actionClass[i] = UFighterAction::StaticClass();
 		}
-		actions.Add(NewObject<UFighterAction>(this, actionClass[i]));
+		actions.Add(actions.Num(), NewObject<UFighterAction>(this, actionClass[i]));
 	}
 }
 
@@ -63,9 +68,6 @@ void UFighter::TriggerAction(UFighter* target)
 	if (selectedAction && target)
 	{
 		selectedAction->Trigger(this, target);
-
-		FString className = selectedAction->GetName();
-		UE_LOG(LogTemp, Warning, TEXT("UFighter::TriggerAction - triggered action! : %s"), *className);
 	}
 	else
 	{
@@ -75,10 +77,10 @@ void UFighter::TriggerAction(UFighter* target)
 	return;
 }
 
-void UFighter::LaunchAction_Implementation(UFighter* target)
+void UFighter::LaunchAction_Implementation(UCombat* combat)
 {
+	UFighter* target = combat->GetFighters()[0];
 	TriggerAction(target);
-	UE_LOG(LogTemp, Warning, TEXT("UFighter::LaunchAction_Implementation - done!"));
 	return;
 }
 

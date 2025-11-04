@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Fighter/Fighter.h"
+#include "Fighter.h"
 #include "NPCFighter.generated.h"
 
 /**
@@ -16,6 +16,6 @@ class COMBATSYSTEM_API UNPCFighter : public UFighter
 
 public:
 
-	void LaunchAction_Implementation(UFighter* target) override;
+	void LaunchAction_Implementation(UCombat* combat) override;
 	
 };
