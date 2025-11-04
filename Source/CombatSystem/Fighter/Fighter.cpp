@@ -30,6 +30,10 @@ void UFighter::Initialize()
 		actions.Add(actions.Num(), NewObject<UFighterAction>(this, actionClass[i]));
 	}
 }
+UFighterController* UFighter::GetController()
+{
+	return controller;
+}
 
 int UFighter::GetCurrentHealth()
 {
@@ -40,7 +44,7 @@ void UFighter::SetCurrentHealth(int value)
 {
 	currentHealth = value;
 
-	onHealthChanged.Broadcast();
+	controller->onHealthChanged.Broadcast();
 
 	return;
 }

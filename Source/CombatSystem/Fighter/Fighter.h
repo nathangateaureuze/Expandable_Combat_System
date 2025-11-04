@@ -11,7 +11,6 @@ class UCombat;
 class UFighterController;
 class UFighterAction;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnHealthChanged);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnActionTriggered);
 
 /**
@@ -65,22 +64,22 @@ public:
 	virtual void LaunchAction_Implementation(UCombat* combat);
 
 	UPROPERTY(BlueprintAssignable)
-	FOnHealthChanged onHealthChanged;
-
-	UPROPERTY(BlueprintAssignable)
 	FOnActionTriggered onActionTriggered;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	TMap<int, UFighterAction*> actions;
 
-	UPROPERTY()
-	UFighterController* controller;
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFighterController* GetController();
 
 	
 private:
 
 	UPROPERTY(EditAnywhere)
 	TArray<TSubclassOf<UFighterAction>> actionClass;
+
+	UPROPERTY()
+	UFighterController* controller;
 
 protected:
 

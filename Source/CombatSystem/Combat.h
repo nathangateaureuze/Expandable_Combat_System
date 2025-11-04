@@ -10,7 +10,7 @@ class UFighter;
 class UFighterController;
 class UFighterAction;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAddedFighter, UFighter*, fighter, int, index);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAddedFighter, UFighterController*, fighterController, int, index);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMainLoopExecuted);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnActiveFighterChanged, UFighterController*, fighterController);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnQueueRefilled);

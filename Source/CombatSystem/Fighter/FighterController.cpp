@@ -3,12 +3,28 @@
 
 #include "FighterController.h"
 #include "Fighter.h"
+#include "FighterStats.h"
 #include "FighterAction.h"
 
 
 void UFighterController::Initialize(UFighter* owner)
 {
 	fighter = owner;
+}
+
+FLinearColor UFighterController::GetColor()
+{
+	return fighter->GetIconColor();
+}
+
+int UFighterController::GetCurrentHealth()
+{
+	return fighter->GetCurrentHealth();
+}
+
+FFighterStats UFighterController::GetStats()
+{
+	return fighter->GetStats();
 }
 
 TMap<int, FText> UFighterController::GetActionNames()
@@ -23,4 +39,9 @@ TMap<int, FText> UFighterController::GetActionNames()
 	}
 
 	return names;
+}
+
+FText UFighterController::GetActionDescription(int id)
+{
+	return fighter->actions[id]->GetActionDescription();
 }

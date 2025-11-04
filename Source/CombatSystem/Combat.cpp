@@ -44,13 +44,13 @@ void UCombat::AddFighter(UFighter* fighter, int index)
 {
 	fighters.Insert(fighter, index);
 
-	onAddedFighter.Broadcast(fighter, index);
+	onAddedFighter.Broadcast(fighter->GetController(), index);
 }
 
 void UCombat::SetActiveFighter(UFighter* fighter)
 {
 	activeFighter = fighter;
-	onActiveFighterChanged.Broadcast(fighter->controller);
+	onActiveFighterChanged.Broadcast(fighter->GetController());
 }
 
 TArray<UFighter*> UCombat::GetFighters()
