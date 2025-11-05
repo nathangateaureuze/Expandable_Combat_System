@@ -32,7 +32,7 @@ void UCombat::MainLoop()
 	fightersQueue.RemoveAt(0);
 
 	activeFighter->onActionTriggered.AddUniqueDynamic(this, &UCombat::OnActionTriggered);
-	activeFighter->LaunchAction(this);
+	activeFighter->SetHasTurn(true);
 }
 
 void UCombat::Start()
@@ -53,9 +53,16 @@ void UCombat::SetActiveFighter(UFighter* fighter)
 	onActiveFighterChanged.Broadcast(fighter->GetController());
 }
 
-TArray<UFighter*> UCombat::GetFighters()
+TArray<UFighterController*> UCombat::GetFighters()
 {
-	return fighters;
+	TArray<UFighterController*> controllers;
+
+	for (int i = 0; i < fighters.Num(); i++)
+	{
+		controllers.Add(fighters[i]->GetController());
+	}
+
+	return controllers;
 }
 
 void UCombat::RefillQueue()
@@ -66,6 +73,7 @@ void UCombat::RefillQueue()
 
 void UCombat::OnActionTriggered()
 {
+	activeFighter->SetHasTurn(false);
 	onMainLoopExecuted.Broadcast();
 }
 

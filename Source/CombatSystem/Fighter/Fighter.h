@@ -57,11 +57,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	int TakeDamage(int value);
 	
-	void TriggerAction(UFighter* target);
-
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void LaunchAction(UCombat* combat);
-	virtual void LaunchAction_Implementation(UCombat* combat);
+	void TriggerAction(int actionId);
 
 	UPROPERTY(BlueprintAssignable)
 	FOnActionTriggered onActionTriggered;
@@ -72,6 +68,12 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFighterController* GetController();
 
+	UFUNCTION()
+	bool GetHasTurn();
+
+	UFUNCTION()
+	void SetHasTurn(bool value);
+
 	
 private:
 
@@ -81,12 +83,12 @@ private:
 	UPROPERTY()
 	UFighterController* controller;
 
+	bool hasTurn;
+
 protected:
 
 	UPROPERTY(EditAnywhere)
 	FFighterStats stats;
-
-	UFighterAction* selectedAction;
 
 	UPROPERTY()
 	int currentHealth;

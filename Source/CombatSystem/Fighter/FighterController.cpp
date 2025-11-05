@@ -12,6 +12,19 @@ void UFighterController::Initialize(UFighter* owner)
 	fighter = owner;
 }
 
+bool UFighterController::GetHasTurn()
+{
+	return fighter->GetHasTurn();
+}
+
+void UFighterController::TriggerAction(int actionId)
+{
+	if (GetHasTurn())
+	{
+		fighter->TriggerAction(actionId);
+	}
+}
+
 FLinearColor UFighterController::GetColor()
 {
 	return fighter->GetIconColor();
@@ -44,4 +57,9 @@ TMap<int, FText> UFighterController::GetActionNames()
 FText UFighterController::GetActionDescription(int id)
 {
 	return fighter->actions[id]->GetActionDescription();
+}
+
+void UFighterController::OnGetTurn()
+{
+	onGetTurn.Broadcast();
 }

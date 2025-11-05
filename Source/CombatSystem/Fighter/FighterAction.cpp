@@ -10,6 +10,7 @@ UFighterAction::UFighterAction()
 
 void UFighterAction::Trigger_Implementation(UFighter* from, UFighter* target)
 {
+	target->TakeDamage(1);
 	return;
 }
 

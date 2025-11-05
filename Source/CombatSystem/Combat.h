@@ -27,7 +27,6 @@ public:
 
 	UCombat();
 
-
 	/*	-------------------
 	*	BP Initializer Values
 	*	-------------------	*/
@@ -48,7 +47,7 @@ public:
 	void AddFighter(UFighter* fighter, int index);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
-	TArray<UFighter*> GetFighters();
+	TArray<UFighterController*> GetFighters();
 
 	UPROPERTY(BlueprintAssignable)
 	FOnAddedFighter onAddedFighter;

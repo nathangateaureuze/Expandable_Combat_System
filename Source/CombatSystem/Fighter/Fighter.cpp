@@ -35,6 +35,17 @@ UFighterController* UFighter::GetController()
 	return controller;
 }
 
+bool UFighter::GetHasTurn()
+{
+	return hasTurn;
+}
+
+void UFighter::SetHasTurn(bool value)
+{
+	hasTurn = value;
+	controller->OnGetTurn();
+}
+
 int UFighter::GetCurrentHealth()
 {
 	return currentHealth;
@@ -67,24 +78,19 @@ int UFighter::TakeDamage(int value)
 	return 0;
 }
 
-void UFighter::TriggerAction(UFighter* target)
+void UFighter::TriggerAction(int actionId)
 {
-	if (selectedAction && target)
+	UFighterAction* selectedAction = actions[actionId];
+
+	if (selectedAction)
 	{
-		selectedAction->Trigger(this, target);
+		selectedAction->Trigger(this, this);
 	}
 	else
 	{
 		UE_LOG(LogTemp, Error, TEXT("UFighter::TriggerAction - invalid refs!"));
 	}
 	onActionTriggered.Broadcast();
-	return;
-}
-
-void UFighter::LaunchAction_Implementation(UCombat* combat)
-{
-	UFighter* target = combat->GetFighters()[0];
-	TriggerAction(target);
 	return;
 }
 

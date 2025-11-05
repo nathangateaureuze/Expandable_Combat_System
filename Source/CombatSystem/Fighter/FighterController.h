@@ -10,6 +10,7 @@ class UFighter;
 struct FFighterStats;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnHealthChanged);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGetTurn);
 
 /**
  * 
@@ -22,6 +23,12 @@ class COMBATSYSTEM_API UFighterController : public UObject
 public:
 
 	void Initialize(UFighter* owner);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetHasTurn();
+
+	UFUNCTION(BlueprintCallable)
+	void TriggerAction(int actionId);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FLinearColor GetColor();
@@ -40,6 +47,10 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnHealthChanged onHealthChanged;
+
+	void OnGetTurn();
+
+	FOnGetTurn onGetTurn;
 
 private:
 
