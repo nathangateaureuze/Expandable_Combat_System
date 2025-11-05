@@ -1,0 +1,8 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+
+#include "FighterPlayerController.h"
+
+void UFighterPlayerController::OnGetTurn_Implementation()
+{
+}

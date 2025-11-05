@@ -14,7 +14,7 @@ UFighter::UFighter()
 
 void UFighter::Initialize()
 {
-	controller = NewObject<UFighterController>();
+	controller = NewObject<UFighterController>(this, controllerClass);
 	controller->Initialize(this);
 
 	iconColor = initIconColor;

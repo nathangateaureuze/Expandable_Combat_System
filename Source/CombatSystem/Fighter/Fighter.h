@@ -32,6 +32,9 @@ public:
 	TArray<TSubclassOf<UFighterAction>> initActionClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
+	TSubclassOf<UFighterController> controllerClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
 	FLinearColor initIconColor = FLinearColor(1, 0, 1, 1);
 	//END of BP Initializer Values
 

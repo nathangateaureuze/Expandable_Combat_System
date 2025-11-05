@@ -48,7 +48,11 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnHealthChanged onHealthChanged;
 
+	void GetTurn();
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void OnGetTurn();
+	virtual void OnGetTurn_Implementation();
 
 	FOnGetTurn onGetTurn;
 

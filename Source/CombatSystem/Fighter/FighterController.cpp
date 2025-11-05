@@ -59,7 +59,12 @@ FText UFighterController::GetActionDescription(int id)
 	return fighter->actions[id]->GetActionDescription();
 }
 
-void UFighterController::OnGetTurn()
+void UFighterController::GetTurn()
 {
 	onGetTurn.Broadcast();
+}
+
+void UFighterController::OnGetTurn_Implementation()
+{
+	TriggerAction(0);
 }
