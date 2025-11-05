@@ -1,25 +1,26 @@
 // Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted.
 
 
-#include "FighterAction.h"
+#include "Action.h"
 #include "Fighter.h"
+#include "../Combat.h"
 
-UFighterAction::UFighterAction()
+UAction::UAction()
 {
 }
 
-void UFighterAction::Trigger_Implementation(UFighter* from, UFighter* target)
+void UAction::Trigger_Implementation(UFighter* from, UFighter* target, UCombat* combat)
 {
 	target->TakeDamage(1);
 	return;
 }
 
-FText UFighterAction::GetActionName()
+FText UAction::GetActionName()
 {
 	return name;
 }
 
-FText UFighterAction::GetActionDescription()
+FText UAction::GetActionDescription()
 {
 	return description;
 }

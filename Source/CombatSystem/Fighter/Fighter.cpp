@@ -4,17 +4,18 @@
 
 #include "Fighter.h"
 #include "../Combat.h"
-#include "FighterController.h"
-#include "FighterAction.h"
+#include "BaseFighterController.h"
+#include "Action.h"
 
 UFighter::UFighter()
 {
 	currentHealth = stats.maxHealth;
 }
 
-void UFighter::Initialize()
+void UFighter::Initialize(UCombat* owner)
 {
-	controller = NewObject<UFighterController>(this, controllerClass);
+	combat = owner; 
+	controller = NewObject<UBaseFighterController>(this, controllerClass);
 	controller->Initialize(this);
 
 	iconColor = initIconColor;
@@ -25,12 +26,12 @@ void UFighter::Initialize()
 		if (!actionClass[i])
 		{
 			UE_LOG(LogTemp, Warning, TEXT("UFighter::Initialize - actionClass is invalid"));
-			actionClass[i] = UFighterAction::StaticClass();
+			actionClass[i] = UAction::StaticClass();
 		}
-		actions.Add(actions.Num(), NewObject<UFighterAction>(this, actionClass[i]));
+		actions.Add(actions.Num(), NewObject<UAction>(this, actionClass[i]));
 	}
 }
-UFighterController* UFighter::GetController()
+UBaseFighterController* UFighter::GetController()
 {
 	return controller;
 }
@@ -44,6 +45,11 @@ void UFighter::SetHasTurn(bool value)
 {
 	hasTurn = value;
 	controller->OnGetTurn();
+}
+
+UCombat* UFighter::GetCombat()
+{
+	return combat;
 }
 
 int UFighter::GetCurrentHealth()
@@ -78,23 +84,24 @@ int UFighter::TakeDamage(int value)
 	return 0;
 }
 
-void UFighter::TriggerAction(int actionId)
+void UFighter::TriggerAction(int actionId, UBaseFighterController* target)
 {
-	UFighterAction* selectedAction = actions[actionId];
+	UAction* selectedAction = actions[actionId];
 
 	if (selectedAction)
 	{
-		selectedAction->Trigger(this, this);
+		selectedAction->Trigger(this, this/*TODO - get target from combat*/, combat);
 	}
 	else
 	{
 		UE_LOG(LogTemp, Error, TEXT("UFighter::TriggerAction - invalid refs!"));
 	}
-	onActionTriggered.Broadcast();
-	return;
+
+	EndTurn();
 }
 
-void UFighter::SetColor(FLinearColor color)
+void UFighter::EndTurn()
 {
-	iconColor = color;
+
+	onTurnEnded.Broadcast();
 }

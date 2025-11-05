@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "FighterController.generated.h"
+#include "BaseFighterController.generated.h"
 
 class UFighter;
 struct FFighterStats;
@@ -16,7 +16,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGetTurn);
  * 
  */
 UCLASS(BlueprintType, Blueprintable)
-class COMBATSYSTEM_API UFighterController : public UObject
+class COMBATSYSTEM_API UBaseFighterController : public UObject
 {
 	GENERATED_BODY()
 
@@ -28,7 +28,7 @@ public:
 	bool GetHasTurn();
 
 	UFUNCTION(BlueprintCallable)
-	void TriggerAction(int actionId);
+	void TriggerAction(int actionId, UBaseFighterController* target);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FLinearColor GetColor();
@@ -44,6 +44,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FText GetActionDescription(int id);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UBaseFighterController* GetTarget();
 
 	UPROPERTY(BlueprintAssignable)
 	FOnHealthChanged onHealthChanged;

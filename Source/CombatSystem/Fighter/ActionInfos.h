@@ -4,14 +4,20 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "Equipment.generated.h"
+#include "ActionInfos.generated.h"
 
 /**
  * 
  */
-UCLASS()
-class COMBATSYSTEM_API UEquipment : public UObject
+USTRUCT(BlueprintType)
+struct FActionInfos
 {
 	GENERATED_BODY()
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	int maxHealth = 10;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	int speed = 10;
 	
 };

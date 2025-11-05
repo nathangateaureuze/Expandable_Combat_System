@@ -2,8 +2,9 @@
 
 
 #include "Combat.h"
+#include "CombatHandler.h"
 #include "Fighter/Fighter.h"
-#include "Fighter/FighterAction.h"
+#include "Fighter/Action.h"
 #include "Misc.h"
 
 
@@ -13,13 +14,21 @@ UCombat::UCombat()
 
 void UCombat::Initialize()
 {
+	handler = NewObject<UCombatHandler>(this);
+	handler->Initialize(this);
+
 	TArray<UFighter*>sortedFighters = SortFighters(initFighters);
 
 	for (int i = 0; i < sortedFighters.Num(); i++)
 	{
-		sortedFighters[i]->Initialize();
+		sortedFighters[i]->Initialize(this);
 		AddFighter(sortedFighters[i], i);
 	}
+}
+
+UCombatHandler* UCombat::GetHandler()
+{
+	return handler;
 }
 
 void UCombat::MainLoop()
@@ -31,7 +40,7 @@ void UCombat::MainLoop()
 
 	fightersQueue.RemoveAt(0);
 
-	activeFighter->onActionTriggered.AddUniqueDynamic(this, &UCombat::OnActionTriggered);
+	activeFighter->onTurnEnded.AddUniqueDynamic(this, &UCombat::OnActionTriggered);
 	activeFighter->SetHasTurn(true);
 }
 
@@ -53,9 +62,9 @@ void UCombat::SetActiveFighter(UFighter* fighter)
 	onActiveFighterChanged.Broadcast(fighter->GetController());
 }
 
-TArray<UFighterController*> UCombat::GetFighters()
+TArray<UBaseFighterController*> UCombat::GetFighters()
 {
-	TArray<UFighterController*> controllers;
+	TArray<UBaseFighterController*> controllers;
 
 	for (int i = 0; i < fighters.Num(); i++)
 	{

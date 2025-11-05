@@ -1,8 +1,9 @@
 // Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted.
 
 
-#include "FighterPlayerController.h"
+#include "CombatHandler.h"
 
-void UFighterPlayerController::OnGetTurn_Implementation()
+void UCombatHandler::Initialize(UCombat* owner)
 {
+	combat = owner;
 }

@@ -6,13 +6,14 @@
 #include "UObject/NoExportTypes.h"
 #include "Combat.generated.h"
 
+class UCombatHandler;
 class UFighter;
-class UFighterController;
-class UFighterAction;
+class UBaseFighterController;
+class UAction;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAddedFighter, UFighterController*, fighterController, int, index);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAddedFighter, UBaseFighterController*, fighterController, int, index);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMainLoopExecuted);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnActiveFighterChanged, UFighterController*, fighterController);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnActiveFighterChanged, UBaseFighterController*, fighterController);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnQueueRefilled);
 
 /**
@@ -37,6 +38,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Initialize();
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UCombatHandler* GetHandler();
+
 	UFUNCTION(BlueprintCallable)
 	void MainLoop();
 
@@ -47,7 +51,7 @@ public:
 	void AddFighter(UFighter* fighter, int index);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
-	TArray<UFighterController*> GetFighters();
+	TArray<UBaseFighterController*> GetFighters();
 
 	UPROPERTY(BlueprintAssignable)
 	FOnAddedFighter onAddedFighter;
@@ -63,6 +67,9 @@ public:
 
 
 private:
+
+	UCombatHandler* handler;
+
 	TArray<UFighter*> fighters;
 	TArray<UFighter*> fightersQueue;
 

@@ -8,10 +8,10 @@
 #include "Fighter.generated.h"
 
 class UCombat;
-class UFighterController;
-class UFighterAction;
+class UBaseFighterController;
+class UAction;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnActionTriggered);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTurnEnded);
 
 /**
  * 
@@ -29,62 +29,54 @@ public:
 	*	BP Initializer Values
 	*	-------------------	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
-	TArray<TSubclassOf<UFighterAction>> initActionClass;
+	TArray<TSubclassOf<UAction>> initActionClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
-	TSubclassOf<UFighterController> controllerClass;
+	TSubclassOf<UBaseFighterController> controllerClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
 	FLinearColor initIconColor = FLinearColor(1, 0, 1, 1);
 	//END of BP Initializer Values
 
-	UFUNCTION(BlueprintCallable)
-	virtual void Initialize();
+	virtual void Initialize(UCombat* owner);
 
-	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int GetCurrentHealth();
 
-	UFUNCTION(BlueprintCallable)
 	void SetCurrentHealth(int value);
 
-	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FFighterStats GetStats();
 
-	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FLinearColor GetIconColor();
-
-	//TEMP - Set player color
-	UFUNCTION(BlueprintCallable)
-	void SetColor(FLinearColor color);
 
 	UFUNCTION(BlueprintCallable)
 	int TakeDamage(int value);
 	
-	void TriggerAction(int actionId);
+	void TriggerAction(int actionId, UBaseFighterController* target);
 
-	UPROPERTY(BlueprintAssignable)
-	FOnActionTriggered onActionTriggered;
+	void EndTurn();
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere)
-	TMap<int, UFighterAction*> actions;
+	FOnTurnEnded onTurnEnded;
 
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	UFighterController* GetController();
+	TMap<int, UAction*> actions;
 
-	UFUNCTION()
+	UBaseFighterController* GetController();
+
 	bool GetHasTurn();
 
-	UFUNCTION()
 	void SetHasTurn(bool value);
+
+	UCombat* GetCombat();
 
 	
 private:
 
 	UPROPERTY(EditAnywhere)
-	TArray<TSubclassOf<UFighterAction>> actionClass;
+	TArray<TSubclassOf<UAction>> actionClass;
 
-	UPROPERTY()
-	UFighterController* controller;
+	UPROPERTY(EditAnywhere)
+	UBaseFighterController* controller;
+
+	UCombat* combat;
 
 	bool hasTurn;
 
@@ -93,9 +85,8 @@ protected:
 	UPROPERTY(EditAnywhere)
 	FFighterStats stats;
 
-	UPROPERTY()
 	int currentHealth;
 
 	UPROPERTY(EditAnywhere)
-	FLinearColor iconColor = FLinearColor(1, 0, 1, 1);
+	FLinearColor iconColor;
 };

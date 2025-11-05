@@ -4,25 +4,26 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "FighterStats.h"
-#include "FighterAction.generated.h"
+#include "Action.generated.h"
 
 class UFighter;
+class UCombat;
+
 /**
  * 
  */
 UCLASS(Blueprintable, BlueprintType)
-class COMBATSYSTEM_API UFighterAction : public UObject
+class COMBATSYSTEM_API UAction : public UObject
 {
 	GENERATED_BODY()
 
 public:
 
-	UFighterAction();
+	UAction();
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void Trigger(UFighter* from, UFighter* target);
-	virtual void Trigger_Implementation(UFighter* from, UFighter* target);
+	void Trigger(UFighter* from, UFighter* target, UCombat* combat);
+	virtual void Trigger_Implementation(UFighter* from, UFighter* target, UCombat* combat);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FText GetActionName();

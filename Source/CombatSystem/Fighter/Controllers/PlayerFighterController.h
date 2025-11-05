@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "FighterController.h"
-#include "FighterPlayerController.generated.h"
+#include "../BaseFighterController.h"
+#include "PlayerFighterController.generated.h"
 
 /**
  * 
  */
 UCLASS(BlueprintType, Blueprintable)
-class COMBATSYSTEM_API UFighterPlayerController : public UFighterController
+class COMBATSYSTEM_API UPlayerFighterController : public UBaseFighterController
 {
 	GENERATED_BODY()
 
