@@ -69,7 +69,7 @@ void UBaseFighterController::GetTurn()
 UBaseFighterController* UBaseFighterController::GetTarget()
 {
 	TArray<UBaseFighterController*> f = fighter->GetCombat()->GetHandler()->GetFighters();
-	return f[0];
+	return f[FMath::Rand()%f.Num()];
 }
 
 void UBaseFighterController::OnGetTurn_Implementation()

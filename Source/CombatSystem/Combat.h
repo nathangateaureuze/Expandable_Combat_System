@@ -45,6 +45,8 @@ public:
 
 	TArray<UFighter*> GetQueue();
 
+	UFighter* GetControllerFighter(UBaseFighterController* controller);
+
 
 private:
 

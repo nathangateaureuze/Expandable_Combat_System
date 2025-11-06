@@ -90,7 +90,7 @@ void UFighter::TriggerAction(int actionId, UBaseFighterController* target)
 
 	if (selectedAction)
 	{
-		selectedAction->Trigger(this, this/*TODO - get target from combat*/, combat);
+		selectedAction->Trigger(this, combat->GetControllerFighter(target), combat);
 	}
 	else
 	{

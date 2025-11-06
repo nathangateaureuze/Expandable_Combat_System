@@ -67,6 +67,19 @@ TArray<UFighter*> UCombat::GetQueue()
 	return fightersQueue;
 }
 
+UFighter* UCombat::GetControllerFighter(UBaseFighterController* controller)
+{
+	for (int i = 0; i < fighters.Num(); i++)
+	{
+		if (fighters[i]->GetController() == controller)
+		{
+			return fighters[i];
+		}
+	}
+
+	return nullptr;
+}
+
 void UCombat::RefillQueue()
 {
 	fightersQueue = fighters;
