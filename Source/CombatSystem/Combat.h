@@ -11,11 +11,6 @@ class UFighter;
 class UBaseFighterController;
 class UAction;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAddedFighter, UBaseFighterController*, fighterController, int, index);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMainLoopExecuted);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnActiveFighterChanged, UBaseFighterController*, fighterController);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnQueueRefilled);
-
 /**
  * 
  */
@@ -41,29 +36,14 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UCombatHandler* GetHandler();
 
-	UFUNCTION(BlueprintCallable)
 	void MainLoop();
-
-	UFUNCTION(BlueprintCallable)
-	void Start();
 	
 	UFUNCTION(BlueprintCallable)
 	void AddFighter(UFighter* fighter, int index);
 
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	TArray<UBaseFighterController*> GetFighters();
+	TArray<UFighter*> GetFighters();
 
-	UPROPERTY(BlueprintAssignable)
-	FOnAddedFighter onAddedFighter;
-
-	UPROPERTY(BlueprintAssignable)
-	FOnMainLoopExecuted onMainLoopExecuted;
-
-	UPROPERTY(BlueprintAssignable)
-	FOnActiveFighterChanged onActiveFighterChanged;
-
-	UPROPERTY(BlueprintAssignable)
-	FOnQueueRefilled onQueueRefilled;
+	TArray<UFighter*> GetQueue();
 
 
 private:

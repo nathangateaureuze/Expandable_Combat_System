@@ -6,6 +6,7 @@
 #include "FighterStats.h"
 #include "Action.h"
 #include "../Combat.h"
+#include "../CombatHandler.h"
 
 
 void UBaseFighterController::Initialize(UFighter* owner)
@@ -67,7 +68,7 @@ void UBaseFighterController::GetTurn()
 
 UBaseFighterController* UBaseFighterController::GetTarget()
 {
-	TArray<UBaseFighterController*> f = fighter->GetCombat()->GetFighters();
+	TArray<UBaseFighterController*> f = fighter->GetCombat()->GetHandler()->GetFighters();
 	return f[0];
 }
 

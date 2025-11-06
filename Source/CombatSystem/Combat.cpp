@@ -44,46 +44,39 @@ void UCombat::MainLoop()
 	activeFighter->SetHasTurn(true);
 }
 
-void UCombat::Start()
-{
-	this->MainLoop();
-}
-
 void UCombat::AddFighter(UFighter* fighter, int index)
 {
 	fighters.Insert(fighter, index);
 
-	onAddedFighter.Broadcast(fighter->GetController(), index);
+	handler->onAddedFighter.Broadcast(fighter->GetController(), index);
 }
 
 void UCombat::SetActiveFighter(UFighter* fighter)
 {
 	activeFighter = fighter;
-	onActiveFighterChanged.Broadcast(fighter->GetController());
+	handler->onActiveFighterChanged.Broadcast(fighter->GetController());
 }
 
-TArray<UBaseFighterController*> UCombat::GetFighters()
+TArray<UFighter*> UCombat::GetFighters()
 {
-	TArray<UBaseFighterController*> controllers;
+	return fighters;
+}
 
-	for (int i = 0; i < fighters.Num(); i++)
-	{
-		controllers.Add(fighters[i]->GetController());
-	}
-
-	return controllers;
+TArray<UFighter*> UCombat::GetQueue()
+{
+	return fightersQueue;
 }
 
 void UCombat::RefillQueue()
 {
 	fightersQueue = fighters;
-	onQueueRefilled.Broadcast();
+	handler->onQueueRefilled.Broadcast();
 }
 
 void UCombat::OnActionTriggered()
 {
 	activeFighter->SetHasTurn(false);
-	onMainLoopExecuted.Broadcast();
+	handler->onMainLoopExecuted.Broadcast();
 }
 
 TArray<UFighter*> UCombat::SortFighters(TArray<UFighter*> fighters)
