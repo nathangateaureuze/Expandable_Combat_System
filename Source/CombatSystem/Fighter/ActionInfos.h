@@ -15,9 +15,9 @@ struct FActionInfos
 	GENERATED_BODY()
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	int maxHealth = 10;
+	FText name = FText::FromString(TEXT("NONE"));
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	int speed = 10;
+	FText description = FText::FromString(TEXT("NONE"));
 	
 };

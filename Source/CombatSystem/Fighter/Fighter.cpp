@@ -44,7 +44,11 @@ bool UFighter::GetHasTurn()
 void UFighter::SetHasTurn(bool value)
 {
 	hasTurn = value;
-	controller->OnGetTurn();
+
+	if (value)
+	{
+		controller->OnGetTurn();
+	}
 }
 
 UCombat* UFighter::GetCombat()
@@ -60,8 +64,12 @@ int UFighter::GetCurrentHealth()
 void UFighter::SetCurrentHealth(int value)
 {
 	currentHealth = value;
-
 	controller->onHealthChanged.Broadcast();
+
+	if (currentHealth == 0)
+	{
+		Die();
+	}
 
 	return;
 }
@@ -104,4 +112,9 @@ void UFighter::EndTurn()
 {
 
 	onTurnEnded.Broadcast();
+}
+
+void UFighter::Die()
+{
+	combat->RemoveFighter(this);
 }

@@ -8,21 +8,16 @@
 #include "Misc.h"
 
 
-UCombat::UCombat()
-{
-}
-
 void UCombat::Initialize()
 {
 	handler = NewObject<UCombatHandler>(this);
 	handler->Initialize(this);
 
-	TArray<UFighter*>sortedFighters = SortFighters(initFighters);
+	fighters = SortFighters(initFighters);
 
-	for (int i = 0; i < sortedFighters.Num(); i++)
+	for (int i = 0; i < fighters.Num(); i++)
 	{
-		sortedFighters[i]->Initialize(this);
-		AddFighter(sortedFighters[i], i);
+		fighters[i]->Initialize(this);
 	}
 }
 
@@ -44,11 +39,40 @@ void UCombat::MainLoop()
 	activeFighter->SetHasTurn(true);
 }
 
-void UCombat::AddFighter(UFighter* fighter, int index)
+void UCombat::End()
 {
+	handler->onCombatEnded.Broadcast();
+}
+
+void UCombat::AddFighter(UFighter* fighter)
+{
+	int speed = fighter->GetStats().speed;
+	int index = 0;
+
+	for (; index < fighters.Num(); index++)
+	{
+		if (fighters[index]->GetStats().speed < speed)
+		{ break; }
+	}
 	fighters.Insert(fighter, index);
 
-	handler->onAddedFighter.Broadcast(fighter->GetController(), index);
+	handler->onFighterAdded.Broadcast(fighter->GetController(), index);
+}
+
+void UCombat::RemoveFighter(UFighter* fighter)
+{
+	int index = fighters.Find(fighter);
+
+	if (index == INDEX_NONE)
+	{ return; }
+
+	fighters.RemoveAt(index);
+	handler->onFighterRemoved.Broadcast(fighter->GetController());
+
+	if (fighters.IsEmpty())
+	{
+		End();
+	}
 }
 
 void UCombat::SetActiveFighter(UFighter* fighter)
@@ -89,7 +113,7 @@ void UCombat::RefillQueue()
 void UCombat::OnActionTriggered()
 {
 	activeFighter->SetHasTurn(false);
-	handler->onMainLoopExecuted.Broadcast();
+	handler->onMainLoopExecuted.Broadcast(activeFighter->GetController());
 }
 
 TArray<UFighter*> UCombat::SortFighters(TArray<UFighter*> fighters)

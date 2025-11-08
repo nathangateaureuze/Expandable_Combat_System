@@ -6,10 +6,12 @@
 #include "UObject/NoExportTypes.h"
 #include "CombatHandler.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAddedFighter, UBaseFighterController*, fighterController, int, index);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMainLoopExecuted);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMainLoopExecuted, UBaseFighterController*, fighterController);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnActiveFighterChanged, UBaseFighterController*, fighterController);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnFighterAdded, UBaseFighterController*, fighterController, int, index);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnFighterRemoved, UBaseFighterController*, fighterController);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnQueueRefilled);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnCombatEnded);
 
 class UCombat;
 
@@ -35,10 +37,6 @@ public:
 	void StartTurn();
 
 
-
-	UPROPERTY(BlueprintAssignable)
-	FOnAddedFighter onAddedFighter;
-
 	UPROPERTY(BlueprintAssignable)
 	FOnMainLoopExecuted onMainLoopExecuted;
 
@@ -46,7 +44,16 @@ public:
 	FOnActiveFighterChanged onActiveFighterChanged;
 
 	UPROPERTY(BlueprintAssignable)
+	FOnFighterAdded onFighterAdded;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnFighterRemoved onFighterRemoved;
+
+	UPROPERTY(BlueprintAssignable)
 	FOnQueueRefilled onQueueRefilled;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnCombatEnded onCombatEnded;
 
 private:
 

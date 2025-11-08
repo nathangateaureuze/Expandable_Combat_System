@@ -21,8 +21,6 @@ class COMBATSYSTEM_API UCombat : public UObject
 
 public:
 
-	UCombat();
-
 	/*	-------------------
 	*	BP Initializer Values
 	*	-------------------	*/
@@ -37,9 +35,12 @@ public:
 	UCombatHandler* GetHandler();
 
 	void MainLoop();
+
+	void End();
 	
-	UFUNCTION(BlueprintCallable)
-	void AddFighter(UFighter* fighter, int index);
+	void AddFighter(UFighter* fighter);
+
+	void RemoveFighter(UFighter* fighter);
 
 	TArray<UFighter*> GetFighters();
 

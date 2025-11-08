@@ -15,12 +15,7 @@ void UAction::Trigger_Implementation(UFighter* from, UFighter* target, UCombat* 
 	return;
 }
 
-FText UAction::GetActionName()
+FActionInfos UAction::GetInfos()
 {
-	return name;
-}
-
-FText UAction::GetActionDescription()
-{
-	return description;
+	return infos;
 }

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
+#include "ActionInfos.h"
 #include "Action.generated.h"
 
 class UFighter;
@@ -26,15 +27,10 @@ public:
 	virtual void Trigger_Implementation(UFighter* from, UFighter* target, UCombat* combat);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
-	FText GetActionName();
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	FText GetActionDescription();
+	FActionInfos GetInfos();
 
 private:
-	UPROPERTY(EditAnywhere)
-	FText name = FText::FromString(TEXT("NONE"));
 
 	UPROPERTY(EditAnywhere)
-	FText description = FText::FromString(TEXT("NONE"));
+	FActionInfos infos = FActionInfos();
 };

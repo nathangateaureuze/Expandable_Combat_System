@@ -5,6 +5,7 @@
 #include "Fighter.h"
 #include "FighterStats.h"
 #include "Action.h"
+#include "ActionInfos.h"
 #include "../Combat.h"
 #include "../CombatHandler.h"
 
@@ -42,23 +43,16 @@ FFighterStats UBaseFighterController::GetStats()
 	return fighter->GetStats();
 }
 
-TMap<int, FText> UBaseFighterController::GetActionNames()
+TMap<int, FActionInfos> UBaseFighterController::GetActionsInfos()
 {
-	TMap<int, FText> names;
-	TArray<int> keys = TArray<int>();
-	fighter->actions.GenerateKeyArray(keys);
+	TMap<int, FActionInfos> infos;
 
-	for (int i = 0; i < keys.Num(); i++)
+	for (int i = 0; i < fighter->actions.Num(); i++)
 	{
-		names.Add(keys[i], fighter->actions[keys[i]]->GetActionName());
+		infos.Add(i, fighter->actions[i]->GetInfos());
 	}
 
-	return names;
-}
-
-FText UBaseFighterController::GetActionDescription(int id)
-{
-	return fighter->actions[id]->GetActionDescription();
+	return infos;
 }
 
 void UBaseFighterController::GetTurn()
@@ -69,7 +63,11 @@ void UBaseFighterController::GetTurn()
 UBaseFighterController* UBaseFighterController::GetTarget()
 {
 	TArray<UBaseFighterController*> f = fighter->GetCombat()->GetHandler()->GetFighters();
-	return f[FMath::Rand()%f.Num()];
+	if (f.Num() == 0)
+	{
+		UE_LOG(LogTemp, Error, TEXT("UBaseFighterController::GetTarget - WHY?!"));
+	}
+	return f[FMath::Rand() % f.Num()];
 }
 
 void UBaseFighterController::OnGetTurn_Implementation()

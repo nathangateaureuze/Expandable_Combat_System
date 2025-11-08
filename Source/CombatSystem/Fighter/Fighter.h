@@ -55,6 +55,8 @@ public:
 
 	void EndTurn();
 
+	void Die();
+
 	FOnTurnEnded onTurnEnded;
 
 	TMap<int, UAction*> actions;

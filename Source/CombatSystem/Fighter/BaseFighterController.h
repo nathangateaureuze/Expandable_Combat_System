@@ -8,6 +8,7 @@
 
 class UFighter;
 struct FFighterStats;
+struct FActionInfos;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnHealthChanged);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGetTurn);
@@ -40,10 +41,7 @@ public:
 	FFighterStats GetStats();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
-	TMap<int, FText> GetActionNames();
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	FText GetActionDescription(int id);
+	TMap<int, FActionInfos> GetActionsInfos();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UBaseFighterController* GetTarget();
