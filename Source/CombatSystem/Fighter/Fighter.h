@@ -21,6 +21,7 @@ class COMBATSYSTEM_API UFighter : public UObject
 {
 	GENERATED_BODY()
 
+
 public:
 
 	UFighter();
@@ -63,6 +64,8 @@ public:
 
 	UBaseFighterController* GetController();
 
+	int GetTeamIndex();
+
 	bool GetHasTurn();
 
 	void SetHasTurn(bool value);
@@ -82,6 +85,9 @@ private:
 
 	bool hasTurn;
 
+	int teamIndex;
+
+
 protected:
 
 	UPROPERTY(EditAnywhere)
@@ -91,4 +97,6 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	FLinearColor iconColor;
+
+
 };

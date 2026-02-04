@@ -8,7 +8,7 @@
 #include "Misc.h"
 
 
-void UCombat::Initialize()
+void UCombat::Initialize(TArray<UFighter*> initFighters)
 {
 	handler = NewObject<UCombatHandler>(this);
 	handler->Initialize(this);
@@ -69,6 +69,7 @@ void UCombat::RemoveFighter(UFighter* fighter)
 	fighters.RemoveAt(index);
 	handler->onFighterRemoved.Broadcast(fighter->GetController());
 
+	//TODO replace by: is N team winning?
 	if (fighters.IsEmpty())
 	{
 		End();

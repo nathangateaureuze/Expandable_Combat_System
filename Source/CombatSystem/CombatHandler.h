@@ -23,6 +23,7 @@ class COMBATSYSTEM_API UCombatHandler : public UObject
 {
 	GENERATED_BODY()
 
+
 public:
 
 	void Initialize(UCombat* owner);
@@ -55,8 +56,10 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnCombatEnded onCombatEnded;
 
+
 private:
 
 	UCombat* combat;
 	
+
 };

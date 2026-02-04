@@ -21,12 +21,16 @@ class COMBATSYSTEM_API UBaseFighterController : public UObject
 {
 	GENERATED_BODY()
 
+
 public:
 
 	void Initialize(UFighter* owner);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetHasTurn();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int GetTeamIndex();
 
 	UFUNCTION(BlueprintCallable)
 	void TriggerAction(int actionId, UBaseFighterController* target);
@@ -57,8 +61,10 @@ public:
 
 	FOnGetTurn onGetTurn;
 
+
 private:
 
 	UFighter* fighter;
+
 	
 };

@@ -20,17 +20,17 @@ class COMBATSYSTEM_API UAction : public UObject
 
 public:
 
-	UAction();
-
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void Trigger(UFighter* from, UFighter* target, UCombat* combat);
 	virtual void Trigger_Implementation(UFighter* from, UFighter* target, UCombat* combat);
 
-	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FActionInfos GetInfos();
+
 
 private:
 
 	UPROPERTY(EditAnywhere)
 	FActionInfos infos = FActionInfos();
+
+
 };

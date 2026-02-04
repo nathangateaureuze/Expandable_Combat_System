@@ -20,6 +20,11 @@ bool UBaseFighterController::GetHasTurn()
 	return fighter->GetHasTurn();
 }
 
+int UBaseFighterController::GetTeamIndex()
+{
+	return fighter->GetTeamIndex();
+}
+
 void UBaseFighterController::TriggerAction(int actionId, UBaseFighterController* target)
 {
 	if (GetHasTurn())
@@ -65,7 +70,7 @@ UBaseFighterController* UBaseFighterController::GetTarget()
 	TArray<UBaseFighterController*> f = fighter->GetCombat()->GetHandler()->GetFighters();
 	if (f.Num() == 0)
 	{
-		UE_LOG(LogTemp, Error, TEXT("UBaseFighterController::GetTarget - WHY?!"));
+		UE_LOG(LogTemp, Error, TEXT("UBaseFighterController::GetTarget -No fighter found"));
 	}
 	return f[FMath::Rand() % f.Num()];
 }

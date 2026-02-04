@@ -5,9 +5,6 @@
 #include "Fighter.h"
 #include "../Combat.h"
 
-UAction::UAction()
-{
-}
 
 void UAction::Trigger_Implementation(UFighter* from, UFighter* target, UCombat* combat)
 {

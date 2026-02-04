@@ -1,4 +1,3 @@
-
 // Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted.
 
 
@@ -34,6 +33,11 @@ void UFighter::Initialize(UCombat* owner)
 UBaseFighterController* UFighter::GetController()
 {
 	return controller;
+}
+
+int UFighter::GetTeamIndex()
+{
+	return teamIndex;
 }
 
 bool UFighter::GetHasTurn()

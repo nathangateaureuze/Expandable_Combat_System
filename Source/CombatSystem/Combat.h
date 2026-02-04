@@ -19,17 +19,11 @@ class COMBATSYSTEM_API UCombat : public UObject
 {
 	GENERATED_BODY()
 
+
 public:
 
-	/*	-------------------
-	*	BP Initializer Values
-	*	-------------------	*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
-	TArray<UFighter*> initFighters;
-	//END of BP Initializer Values
-
 	UFUNCTION(BlueprintCallable)
-	void Initialize();
+	void Initialize(TArray<UFighter*> initFighters);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UCombatHandler* GetHandler();
@@ -54,11 +48,11 @@ private:
 	UCombatHandler* handler;
 
 	TArray<UFighter*> fighters;
+
 	TArray<UFighter*> fightersQueue;
 
 	UFighter* activeFighter;
-
-	UFUNCTION()
+	
 	void SetActiveFighter(UFighter* fighter);
 
 	void RefillQueue();
@@ -67,4 +61,6 @@ private:
 	virtual void OnActionTriggered();
 
 	static TArray<UFighter*> SortFighters(TArray<UFighter*> fighters);
+
+
 };
